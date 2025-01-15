@@ -1,44 +1,66 @@
 <!DOCTYPE html>
 <html>
 <head>
+
   <meta charset="utf-8">
   
-  
-  <title>2025-ciscn | Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="fffffhash观察题目是让我们输入一个hash后的值等于题目给的giao值。 观察hash函数，每次都是乘一个相同的数字后再与字节值异或，由于异或的值是一个小值，我们可以当作是加减一个值，这个值的大小不大于256，所以对于一个长度为n的字节串，他的hash值应该就满足下面这个式子：  base*(x^n+v_{n-1}*x^{n-1}+v_{n-2}*x^{n-2}+...+v_{1}*x+v">
+    
+
+      <title>
+        
+          2025-ciscn | 
+              Hexo
+      </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="fffffhash观察题目是让我们输入一个hash后的值等于题目给的giao值。 观察hash函数，每次都是乘一个相同的数字后再与字节值异或，由于异或的值是一个小值，我们可以当作是加减一个值，这个值的大小不大于256，所以对于一个长度为n的字节串，他的hash值应该就满足下面这个式子：  base*(x^n+v_{n-1}*x^{n-1}+v_{n-2}*x^{n-2}+...+v_{1}*x+v">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2025-ciscn">
-<meta property="og:url" content="http://example.com/2025/01/14/2025-ciscn/index.html">
+<meta property="og:url" content="https://ma3t1n.github.io/2025/01/14/2025-ciscn/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="fffffhash观察题目是让我们输入一个hash后的值等于题目给的giao值。 观察hash函数，每次都是乘一个相同的数字后再与字节值异或，由于异或的值是一个小值，我们可以当作是加减一个值，这个值的大小不大于256，所以对于一个长度为n的字节串，他的hash值应该就满足下面这个式子：  base*(x^n+v_{n-1}*x^{n-1}+v_{n-2}*x^{n-2}+...+v_{1}*x+v">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-01-14T02:00:56.000Z">
 <meta property="article:modified_time" content="2025-01-14T02:06:08.438Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="Ma3t1n">
 <meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-  
+        
+              <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+                
+                  
+                    <link rel="shortcut icon" href="/favicon.png">
+                      
+                        
+                              
 <link rel="stylesheet" href="/css/style.css">
 
-  
-    
+                                
+                                  
 <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
-  
-  
+                                    
+                                      
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+
+                                        <!-- MathJax 配置 -->
+                                        <script>
+                                          window.MathJax = {
+                                            tex: {
+                                              inlineMath: [['$', '$'], ['\\(', '\\)']],
+                                              displayMath: [['$$', '$$'], ['\\[', '\\]']]
+                                            },
+                                            options: {
+                                              skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+                                            }
+                                          };
+                                        </script>
+                                        <!-- 引入 MathJax -->
+                                        <script
+                                          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 <!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
-
 <body>
   <div id="container">
     <div id="wrap">
@@ -63,12 +85,12 @@
       <nav id="sub-nav">
         
         
-          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
         
-        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://Ma3t1n.github.io"></form>
       </div>
     </div>
   </div>
@@ -169,7 +191,7 @@ s_1*tmp_1=H_1\\s_2*tmp_2=H_2</script><p>就像task3中使用格的方法进行�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/01/14/2025-ciscn/" data-id="cm5xgh5qi0000n4wog10l2e8m" data-title="2025-ciscn" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://ma3t1n.github.io/2025/01/14/2025-ciscn/" data-id="cm5xgmu400001xgwo5ijw8q2e" data-title="2025-ciscn" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -181,7 +203,7 @@ s_1*tmp_1=H_1\\s_2*tmp_2=H_2</script><p>就像task3中使用格的方法进行�
   
   
     <a href="/2025/01/14/blog%E6%95%99%E7%A8%8B/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">后一篇</strong>
       <div class="article-nav-title">blog教程</div>
     </a>
   
@@ -205,9 +227,9 @@ s_1*tmp_1=H_1\\s_2*tmp_2=H_2</script><p>就像task3中使用格的方法进行�
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">January 2025</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">一月 2025</a></li></ul>
     </div>
   </div>
 
@@ -215,7 +237,7 @@ s_1*tmp_1=H_1\\s_2*tmp_2=H_2</script><p>就像task3中使用格的方法进行�
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
         
@@ -244,7 +266,7 @@ s_1*tmp_1=H_1\\s_2*tmp_2=H_2</script><p>就像task3中使用格的方法进行�
   <div class="outer">
     <div id="footer-info" class="inner">
       
-      &copy; 2025 John Doe<br>
+      &copy; 2025 Ma3t1n<br>
       Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
