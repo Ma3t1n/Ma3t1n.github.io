@@ -482,10 +482,12 @@
       
     </h3>
     <div class="post-content-preview">
-      task1
-这道题是2024网鼎杯玄武组的Crypto1
-题目基于Shamir门限方案，一眼看过去似乎一切都很正常，就是Shamir秘密分享而已。
-但是细看会发现player和threshold似乎反了，一般来说，假设Shamir共享的秘密是一个度为d的多项式，那么应该设置d的shreshold，然后由大于d的player每个人持有一个多项式函数点对，凑够threshold就可以插值出多项式......
+      Crypto1题目基于Shamir门限方案.
+他进行了10000轮的Shamir秘密分享，而每一轮的流程是（设flag长度为n）：
+设置player数量为n
+设置threshold为2n
+生成coefs，其由n个模257下的随机数列表组成，每个列表长为2n，记这些长为2n的向量为$\textbf{c}_i$
+生成randoms，其长度为2n，前n个为flag，后n个为模257下的随机数，记为......
     </div>
   </a>
   
