@@ -247,6 +247,17 @@
           
           
           <li>
+            <a href="/tags/">
+              
+              标签
+              
+              
+            </a>
+          </li>
+          
+          
+          
+          <li>
             <a href="/about/">
               
               关于
@@ -261,17 +272,6 @@
             <a href="/categories/">
               
               分类
-              
-              
-            </a>
-          </li>
-          
-          
-          
-          <li>
-            <a href="/tags/">
-              
-              标签
               
               
             </a>
@@ -468,8 +468,7 @@
       <!-- Post Container -->
       <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1 post-container">
 
-        <h1>Crypto1</h1>
-<p>题目基于Shamir门限方案.</p>
+        <h1 id="Crypto1"><a href="#Crypto1" class="headerlink" title="Crypto1"></a>Crypto1</h1><p>题目基于Shamir门限方案.</p>
 <p>他进行了10000轮的Shamir秘密分享，而每一轮的流程是（设flag长度为n）：</p>
 <p>设置player数量为n</p>
 <p>设置threshold为2n</p>
@@ -482,17 +481,11 @@
 <p>​  我们将coefs也将前n列的向量记作矩阵A，后n列记作矩阵B，所以$values=A\cdot flags+B\cdot r$</p>
 <p>​  对于这个式子我们需要求出$flags$，所以我们需要消掉$r$对于我们的影响然后就可以求出$flags$了，对于一个满秩的矩阵是可以求出一个矩阵与他相乘等于零，所以我们可以求出B的左零向量使得$v\times B=0$，那么上式就可以变成$v\times values=v\times A\cdot flags$，这个式子中$v\times values$与$v\times A$都是可以求出来的，解方程就可以得到$flags$了。而题目中给的数据也是刚刚好，有32组满秩的B可以求出他的左零向量。</p>
 <figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">from</span> sage.all <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">K</span> = <span class="number">10000</span></span><br><span class="line"><span class="type">L</span> = <span class="number">32</span></span><br><span class="line"><span class="title">modulus</span>=<span class="number">257</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="type">ShamirSS</span>:</span></span><br><span class="line"><span class="class">    def __init__(<span class="title">self</span>, <span class="title">coefs</span>, <span class="title">value</span>):</span></span><br><span class="line"><span class="class">        self.coefs = coefs</span></span><br><span class="line"><span class="class">        self.value = value</span></span><br><span class="line"><span class="class"><span class="type">V</span>=[]</span></span><br><span class="line"><span class="class"><span class="type">AA</span>=[]</span></span><br><span class="line"><span class="class"><span class="type">SS</span>=[]</span></span><br><span class="line"><span class="class">for k in range(<span class="type">K</span>):</span></span><br><span class="line"><span class="class">    b = []</span></span><br><span class="line"><span class="class">    share_file = f&quot;<span class="type">Competition</span>/shares/share_&#123;k&#125;.sobj&quot;</span></span><br><span class="line"><span class="class">    shares = load(<span class="title">share_file</span>)  # 从文件加载共享对象</span></span><br><span class="line"><span class="class">    <span class="type">A</span>=[]</span></span><br><span class="line"><span class="class">    <span class="type">B</span>=[]</span></span><br><span class="line"><span class="class">    <span class="type">S</span>=[]</span></span><br><span class="line"><span class="class">    for i in shares:</span></span><br><span class="line"><span class="class">        <span class="type">A</span>.append(<span class="title">i</span>.<span class="title">coefs</span>[:32])</span></span><br><span class="line"><span class="class">        <span class="type">B</span>.append(<span class="title">i</span>.<span class="title">coefs</span>[32:])</span></span><br><span class="line"><span class="class">        <span class="type">S</span>.append(<span class="title">i</span>.<span class="title">value</span>)</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">    <span class="type">M1</span>=<span class="type">Matrix</span>(<span class="type">Zmod(modulus)</span>,32,32,<span class="type">A</span>)</span></span><br><span class="line"><span class="class">    <span class="type">M2</span>=<span class="type">Matrix</span>(<span class="type">Zmod(modulus)</span>,32,32,<span class="type">B</span>)</span></span><br><span class="line"><span class="class">    </span></span><br><span class="line"><span class="class">    if(<span class="type">M2</span>.<span class="title">rank</span>()!=32):</span></span><br><span class="line"><span class="class">        v = vector(<span class="type">M2</span>.<span class="title">left_kernel</span>().basis()[0])</span></span><br><span class="line"><span class="class">        <span class="type">V</span>.append(<span class="title">v</span>)</span></span><br><span class="line"><span class="class">        <span class="type">AA</span>.append(<span class="title">v</span>*<span class="type">M1</span>)</span></span><br><span class="line"><span class="class">        <span class="type">SS</span>.append(<span class="title">v</span> * <span class="title">vector</span>(<span class="type">S</span>))</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="type">BB</span> = matrix(<span class="type">Zmod(modulus)</span>, <span class="type">AA</span>)</span></span><br><span class="line"><span class="class">ans = <span class="type">BB</span>.solve_right(<span class="title">vector</span>(<span class="type">SS</span>))</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">flag = b&#x27;&#x27;</span></span><br><span class="line"><span class="class">for i in ans:</span></span><br><span class="line"><span class="class">    flag += bytes.fromhex(<span class="title">hex</span>(<span class="title">i</span>)[2:])</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">print(<span class="title">flag</span>)</span></span><br></pre></td></tr></table></figure>
-<h1>Crypto2</h1>
-<p>题目基于OT，连接上靶机后靶机会生成：</p>
-<p>32字节的aeskey<br>
-32字节的xorkey<br>
-1024bit的RSA公私钥对<br>
-长度为70的secrets列表，其中每个元素都是随机的32个字节</p>
+<h1 id="Crypto2"><a href="#Crypto2" class="headerlink" title="Crypto2"></a>Crypto2</h1><p>题目基于OT，连接上靶机后靶机会生成：</p>
+<p>32字节的aeskey<br>32字节的xorkey<br>1024bit的RSA公私钥对<br>长度为70的secrets列表，其中每个元素都是随机的32个字节</p>
 <p>有了这些量之后，靶机接着生成一个长为71的列表message_pairs，其中元素构成为：</p>
-<p>第一个值为(aeskey, xorkey)<br>
-后70个值为AES和XOR分别对secrets列表中每个元素的加密结果构成的二元组</p>
-<h2 id="RSA-OT">RSA-OT</h2>
-<p>之后正式进入限时120s的交互， 交互基于1 out of 2的RSA-OT，共71轮。具体一轮交互过程为：</p>
+<p>第一个值为(aeskey, xorkey)<br>后70个值为AES和XOR分别对secrets列表中每个元素的加密结果构成的二元组</p>
+<h2 id="RSA-OT"><a href="#RSA-OT" class="headerlink" title="RSA-OT"></a>RSA-OT</h2><p>之后正式进入限时120s的交互， 交互基于1 out of 2的RSA-OT，共71轮。具体一轮交互过程为：</p>
 <p>输入两个值m0，m1，对于题目来讲这都是32字节的量</p>
 <p>将两个量分别做PKCS#1 v1.5的encode，得到128字节的m0和m1</p>
 <p>PKCS#1 v1.5的encode结果就是：</p>
@@ -500,11 +493,10 @@
 <p>其中ps是随机填充的每个字节都不等于0的字节串</p>
 <p>随机生成128字节的x0，x1并给出，我们需要输入一个v，之后靶机会返回：M0和M1，如下</p>
 <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">M0 = (m0 + <span class="built_in">pow</span>(v - x0, <span class="built_in">self</span>.d, <span class="built_in">self</span>.n)) % <span class="built_in">self</span>.n</span><br><span class="line">M1 = (m1 + <span class="built_in">pow</span>(v - x1, <span class="built_in">self</span>.d, <span class="built_in">self</span>.n)) % <span class="built_in">self</span>.n</span><br></pre></td></tr></table></figure>
-<p>​  我们的任务是在71轮交互全部完成后，解出所有的secret，并且拿到完整的aeskey和xorkey从而拿到flag<br>
-​  如果我们输入的$v=x_0$或$x_1$，可以得到一个$M_0$或$M_1$的值，但是对于另一个值的求解问题等价于破解这个系统的RSA问题，毫无可能，所以尝试构造$v=X_0-X1+x_1$，其中$X_0,X_1$为第一次交互得到的$x_0,x_1$，这样构造的$v$可以使得我们每次交互得到的M1后面的</p>
-<p>$pow(v - x1, d, n)=pow(X0-X1,d,n)$</p>
+<p>​  我们的任务是在71轮交互全部完成后，解出所有的secret，并且拿到完整的aeskey和xorkey从而拿到flag<br>​  如果我们输入的$v=x_0$或$x_1$，可以得到一个$M_0$或$M_1$的值，但是对于另一个值的求解问题等价于破解这个系统的RSA问题，毫无可能，所以尝试构造$v=X_0-X1+x_1$，其中$X_0,X_1$为第一次交互得到的$x_0,x_1$，这样构造的$v$可以使得我们每次交互得到的M1后面的</p>
+<p> $pow(v - x1, d, n)=pow(X0-X1,d,n)$</p>
 <p>​  这是一个固定不变的值，我们设这个固定不变的值为$k$，变得只有前面的$m1$，而对于PKCS#1填充，前面2个字节是固定的，我们可以通过这两个字节得到$k$的前几个比特，倒数第33个字节也是\x00，我们可以通过这个字节泄露的值对于我们求得的k进行验证。</p>
-<p>​  比方说$M1$的高位是&quot;\x12\x32&quot;，那么我们在不考虑进位的情况下就可以得到k的高位为&quot;\x12\x30&quot;，如果有进位的话就是“\x12\x29”。 在理想的情况下，每次交互我们都能得到两个字节的值的话，在70次的交互是足够还原k的，如果还原了k我们就可以还原每一次交互中的$m_0,m_1$也就可以通过所有的check拿到flag。所以我们还需要将k每次左移2个字节，所以最终构造的$v=(X_0-X_1)\times 2^{16\times e\times i}+x_1$，i指的是第几次与靶机交互。</p>
+<p>​  比方说$M1$的高位是”\x12\x32”，那么我们在不考虑进位的情况下就可以得到k的高位为”\x12\x30”，如果有进位的话就是“\x12\x29”。 在理想的情况下，每次交互我们都能得到两个字节的值的话，在70次的交互是足够还原k的，如果还原了k我们就可以还原每一次交互中的$m_0,m_1$也就可以通过所有的check拿到flag。所以我们还需要将k每次左移2个字节，所以最终构造的$v=(X_0-X_1)\times 2^{16\times e\times i}+x_1$，i指的是第几次与靶机交互。</p>
 <p>但是在实际操作中有很多的问题：</p>
 <p>​  第一个是$k$的数量级与我们的$n$是一样的所以我们得到的是$k\times 2^{16\times i}\mod n$，所以高位会被破坏，所以我们需要先将$k\times 2^{16\times i}$还原。因为是模n后的值，我们可以通过加$n$操作进行还原，对于加$n$的个数我们设为$ad$，对于$ad$我们可以通过我们之前求得的k高位进行估计，设我们现在求得的$k$高位为$k_h$，所以$ad\approx (k_h\times 2^{1024}-M_1)//n$，求得的$ad$值与实际的$ad$值误差很小，这个误差与n的大小有关，n的第一个字节越大误差越小，然后我们加上$ad\times n$后再继续加n，使得高位与我们已经得到的$k_h$相同即可。但问题就来了，当n很小的时候，对于现在还原的$k\times 2^{16\times i}$可能并不是正确的，因为继续加n同样可以满足高位不变而，这样的情况个数与n的大小有关，这里难以判断，只有在后续k的还原中可以通过倒数第33字节泄露的值进行检查。</p>
 <p>​  第二个问题也就是我们每次还原的k是否需要减一无法判断。如果我们每次读取3个16进制位的话，我们可以使用第四个16进制进行检查是否进位，但是当第四个16进制位为2时无法判断，但是这样只有$\frac{1}{32}$的概率误判，如果我们读取4个16进制为的话，对于是否进位只有$\frac{1}{2}$的概率误判，但1.5个字节在理想情况下只能还原105个字节，是远远不够的。</p>
@@ -662,7 +654,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Crypto1</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Crypto2</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#RSA-OT"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">RSA-OT</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Crypto1"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Crypto1</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Crypto2"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Crypto2</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#RSA-OT"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">RSA-OT</span></a></li></ol></li></ol>
         
         </div>
       </aside>
