@@ -244,6 +244,8 @@
 
           
           
+          
+          
           <li>
             <a href="/archive/">
               
@@ -267,9 +269,9 @@
           
           
           <li>
-            <a href="/categories/">
+            <a href="/tags/">
               
-              分类
+              标签
               
               
             </a>
@@ -277,12 +279,10 @@
           
           
           
-          
-          
           <li>
-            <a href="/tags/">
+            <a href="/categories/">
               
-              标签
+              分类
               
               
             </a>
@@ -490,9 +490,9 @@ f(x)=(1+p)^2\times(1+q)^2\times (1+x_0)\times  \dots \times (1+x_{63})<br>
 $$<br>
 ​  我们要求的素数就是方程$f(x)$的根，但是直接对这个方程求解是求解不出来的，所以考虑对$f(x)$求导，设$g(x)=(1+x_0)\times  \dots \times (1+x_{63})$<br>
 $$<br>
-f^{‘}(x)=2(1+p)\times 2(1+q) \times g(x)+(1+p)^2\times(1+q)^2\times g^{’}(x)=(1+p)\times (1+q)\times (4\times g(x)+(1+p)\times (1+q)\times g^{‘}(x))<br>
+f’(x)(x)=2(1+p)\times 2(1+q) \times g(x)+(1+p)^2\times(1+q)^2\times g’(x)(x)=(1+p)\times (1+q)\times (4\times g(x)+(1+p)\times (1+q)\times g’(x)(x))<br>
 $$<br>
-​  所以$gcd(f(x),f^{’}(x))=(1+p)\times (1+q)$</p>
+​  所以$gcd(f(x),f’(x)(x))=(1+p)\times (1+q)$</p>
 <p>​  然后对于上的方程求解就可以拿到p，q了，再进行常规的rsa解密即可</p>
 <p>代码如下：</p>
 <figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">from output <span class="built_in">import</span> *</span><br><span class="line">from Crypto.Util.number <span class="built_in">import</span> *</span><br><span class="line">from sympy <span class="built_in">import</span> gcd, Poly,solve</span><br><span class="line">from sympy.abc <span class="built_in">import</span> x</span><br><span class="line"><span class="built_in">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="attr">s=tt.split(&quot;\n&quot;)[:-1]</span></span><br><span class="line"><span class="attr">coeffs=[]</span></span><br><span class="line">for i <span class="keyword">in</span> s:</span><br><span class="line">    coeffs.append(bytes_to_long(base64.b64decode(i.encode())))</span><br><span class="line"><span class="attr">f</span> = Poly(coeffs, x)</span><br><span class="line"><span class="attr">f_prime</span> = f.diff(x)</span><br><span class="line"><span class="attr">g</span> = gcd(f, f_prime)</span><br><span class="line">a, b, <span class="attr">c</span> = g.all_coeffs()</span><br><span class="line"><span class="attr">f</span> = (a * x**<span class="number">2</span> + b * x + c, <span class="number">0</span>)</span><br><span class="line"><span class="attr">solution</span> = solve(f, x)</span><br><span class="line"><span class="attr">p</span> = abs(solution[<span class="number">0</span>][<span class="number">0</span>])</span><br><span class="line"><span class="attr">q</span> = abs(solution[<span class="number">1</span>][<span class="number">0</span>])</span><br><span class="line"><span class="attr">phi</span> = (p - <span class="number">1</span>) * (q - <span class="number">1</span>)</span><br><span class="line"><span class="attr">e</span> = <span class="number">65537</span></span><br><span class="line"><span class="attr">d</span> = inverse(e, int(phi))</span><br><span class="line"><span class="attr">c</span> = int(ciphertext, <span class="number">16</span>)</span><br><span class="line"><span class="attr">m</span> = pow(c, d, int(p * q))</span><br><span class="line"><span class="attr">flag</span> = long_to_bytes(m)</span><br><span class="line">print(flag)</span><br><span class="line"><span class="comment">#KSUS&#123;6465726976617469766573206172652061206e69636520747269636b&#125;</span></span><br></pre></td></tr></table></figure>
