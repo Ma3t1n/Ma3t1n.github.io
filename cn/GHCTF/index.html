@@ -244,28 +244,6 @@
 
           
           
-          <li>
-            <a href="/about/">
-              
-              关于
-              
-              
-            </a>
-          </li>
-          
-          
-          
-          <li>
-            <a href="/categories/">
-              
-              分类
-              
-              
-            </a>
-          </li>
-          
-          
-          
           
           
           <li>
@@ -280,9 +258,31 @@
           
           
           <li>
+            <a href="/about/">
+              
+              关于
+              
+              
+            </a>
+          </li>
+          
+          
+          
+          <li>
             <a href="/tags/">
               
               标签
+              
+              
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="/categories/">
+              
+              分类
               
               
             </a>
@@ -473,21 +473,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.Padding <span class="keyword">import</span> pad</span><br><span class="line"><span class="keyword">from</span> secret <span class="keyword">import</span> flag</span><br><span class="line">miku = <span class="number">30</span></span><br><span class="line">p = getPrime(<span class="number">512</span>)</span><br><span class="line">key = getPrime(<span class="number">512</span>)</span><br><span class="line"><span class="keyword">while</span> key&gt; p:</span><br><span class="line">    key= getPrime(<span class="number">512</span>)</span><br><span class="line">ts = []</span><br><span class="line">gs = []</span><br><span class="line">zs = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(miku):</span><br><span class="line">    t = getPrime(<span class="number">512</span>)</span><br><span class="line">    z = getPrime(<span class="number">400</span>)</span><br><span class="line">    g= (t * key + z) % p</span><br><span class="line">    ts.append(t)</span><br><span class="line">    gs.append(g)</span><br><span class="line">    zs.append(z)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;p = <span class="subst">&#123;p&#125;</span>&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;ts = <span class="subst">&#123;ts&#125;</span>&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;gs = <span class="subst">&#123;gs&#125;</span>&#x27;</span>)</span><br><span class="line">iv= os.urandom(<span class="number">16</span>)</span><br><span class="line">cipher = AES.new(<span class="built_in">str</span>(key).encode()[:<span class="number">16</span>], AES.MODE_CBC,iv)</span><br><span class="line">ciphertext=cipher.encrypt(pad(flag.encode(),<span class="number">16</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;iv=<span class="subst">&#123;iv&#125;</span>&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;ciphertext=<span class="subst">&#123;ciphertext&#125;</span>&#x27;</span>)</span><br></pre></td></tr></table></figure>
 <p>​  简单的隐藏数问题</p>
 <p>​  已知$g= (t \times key + z) mod p $，构造如下格，其中K就是z的比特数用来配格系数的，格规约后找到对应向量求出key后解密即可得到flag</p>
-<p>$$<br>
-\begin{bmatrix}</p>
-<p>k_1&amp;k_2&amp;…&amp;k_n&amp;key&amp;-1</p>
-<p>\end{bmatrix}\times</p>
-<p>\begin{bmatrix}</p>
-<p>p&amp;0&amp;\cdots&amp;0&amp;0&amp;0\\</p>
-<p>0&amp;p&amp;\cdots&amp;0&amp;0&amp;0\\</p>
-<p>\vdots&amp;\vdots&amp;\ddots&amp;\vdots&amp;\vdots&amp;\vdots\\</p>
-<p>0&amp;0&amp;\cdots&amp;p&amp;0&amp;0\\</p>
-<p>t_1&amp;t_2&amp;\cdots&amp;t_n&amp;\frac{K}{p}&amp;0\\</p>
-<p>g_q&amp;g_2&amp;\cdots&amp;g_n&amp;0&amp;K</p>
-<p>\end{bmatrix}=\begin{bmatrix}</p>
-<p>z_1&amp;z_2&amp;\cdots&amp;z_n&amp;\frac{key*K}{p}&amp;K</p>
-<p>\end{bmatrix}<br>
-$$</p>
+<p>$\begin{bmatrix}k_1&amp;k_2&amp;…&amp;k_n&amp;key&amp;-1\end{bmatrix}\times\begin{bmatrix}p&amp;0&amp;\cdots&amp;0&amp;0&amp;0\\0&amp;p&amp;\cdots&amp;0&amp;0&amp;0\\\vdots&amp;\vdots&amp;\ddots&amp;\vdots&amp;\vdots&amp;\vdots\\0&amp;0&amp;\cdots&amp;p&amp;0&amp;0\\t_1&amp;t_2&amp;\cdots&amp;t_n&amp;\frac{K}{p}&amp;0\\g_q&amp;g_2&amp;\cdots&amp;g_n&amp;0&amp;K\end{bmatrix}=\begin{bmatrix}z_1&amp;z_2&amp;\cdots&amp;z_n&amp;\frac{key*K}{p}&amp;K\end{bmatrix}$</p>
 <p>代码如下：</p>
 <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">from output import *</span><br><span class="line">from sage.<span class="keyword">all</span> import *</span><br><span class="line">from Crypto.Util.<span class="keyword">number</span> import *</span><br><span class="line">from Crypto.Cipher import AES</span><br><span class="line"><span class="keyword">m</span>=zero_matrix(QQ,<span class="built_in">len</span>(<span class="keyword">ts</span>)+<span class="number">2</span>)</span><br><span class="line">K=<span class="number">2</span>**<span class="number">400</span></span><br><span class="line"><span class="keyword">for</span> i in <span class="built_in">range</span>(<span class="built_in">len</span>(<span class="keyword">ts</span>)):</span><br><span class="line">    <span class="keyword">m</span>[i,i]=<span class="keyword">p</span></span><br><span class="line">    <span class="keyword">m</span>[<span class="built_in">len</span>(<span class="keyword">ts</span>),i]=<span class="keyword">ts</span>[i]</span><br><span class="line">    <span class="keyword">m</span>[<span class="built_in">len</span>(<span class="keyword">ts</span>)+<span class="number">1</span>,i]=gs[i]</span><br><span class="line"><span class="keyword">m</span>[-<span class="number">1</span>,-<span class="number">1</span>]=K</span><br><span class="line"><span class="keyword">m</span>[-<span class="number">2</span>,-<span class="number">2</span>]=K/<span class="keyword">p</span></span><br><span class="line"><span class="keyword">res</span>=<span class="keyword">m</span>.LLL()</span><br><span class="line"><span class="keyword">for</span> i in re<span class="variable">s:</span></span><br><span class="line">    <span class="keyword">if</span> i[-<span class="number">1</span>] == K:</span><br><span class="line">        z0=<span class="built_in">abs</span>(i[<span class="number">0</span>])</span><br><span class="line">        key=(gs[<span class="number">0</span>]-z0)*inverse(<span class="keyword">ts</span>[<span class="number">0</span>],<span class="keyword">p</span>)%<span class="keyword">p</span></span><br><span class="line">        cipher = AES.<span class="keyword">new</span>(str(key).encode()[:<span class="number">16</span>], AES.MODE_CBC,iv)</span><br><span class="line">        flag=cipher.decrypt(ciphertext)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">b</span><span class="string">&#x27;NSSCTF&#x27;</span> in fla<span class="variable">g:</span></span><br><span class="line">            <span class="keyword">print</span>(flag)</span><br><span class="line">#NSSCTF&#123;F@@@un7_L4444t1c3333!!&#125;</span><br></pre></td></tr></table></figure>
 <h1>MIMT_RSA</h1>
