@@ -245,9 +245,9 @@
           
           
           <li>
-            <a href="/about/">
+            <a href="/archive/">
               
-              关于
+              归档
               
               
             </a>
@@ -256,9 +256,9 @@
           
           
           <li>
-            <a href="/tags/">
+            <a href="/about/">
               
-              标签
+              关于
               
               
             </a>
@@ -280,9 +280,9 @@
           
           
           <li>
-            <a href="/archive/">
+            <a href="/tags/">
               
-              归档
+              标签
               
               
             </a>
@@ -489,13 +489,13 @@ Gitee 仓库地址：<a target="_blank" rel="noopener" href="https://gitee.com/V
 <p>Windows：下载 &amp; 安装 Git。-&gt; <a target="_blank" rel="noopener" href="https://git-scm.com/download/win">Git</a></p>
 </blockquote>
 <h3 id="安装-Hexo">安装 Hexo</h3>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> npm install -g hexo-cli</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>什么是 <a target="_blank" rel="noopener" href="https://hexo.io/docs/">Hexo</a>?</p>
 <p>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
 </blockquote>
 <h3 id="设置你的博客">设置你的博客</h3>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo init blog</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init blog</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>更多的命令 -&gt; <a target="_blank" rel="noopener" href="https://hexo.io/docs/commands">Hexo Commands</a></p>
 </blockquote>
@@ -629,7 +629,7 @@ Gitee 仓库地址：<a target="_blank" rel="noopener" href="https://gitee.com/V
 <p>替换为你自己的仓库地址。</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://github.com/&lt;yourAccount&gt;/&lt;repo&gt;</span> <span class="comment"># or https://gitee.com/&lt;yourAccount&gt;/&lt;repo&gt;</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">&lt;your-branch&gt;</span></span><br></pre></td></tr></table></figure>
 <h2 id="Hexo-常用命令">Hexo 常用命令</h2>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo new post <span class="string">&quot;&lt;post name&gt;&quot;</span>   <span class="comment"># you can change post to another layout if you want</span></span><br><span class="line">hexo clean &amp;&amp; hexo generate   <span class="comment"># generate the static file</span></span><br><span class="line">hexo server   <span class="comment"># run hexo in local environment</span></span><br><span class="line">hexo deploy   <span class="comment"># hexo will push the static files automatically into the specific branch(gh-pages) of your repo!</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo new -lang cn <span class="string">&quot;&lt;&gt;&quot;</span>   <span class="comment"># you can change post to another layout if you want</span></span><br><span class="line">hexo clean &amp;&amp; hexo generate   <span class="comment"># generate the static file</span></span><br><span class="line">hexo server   <span class="comment"># run hexo in local environment</span></span><br><span class="line">hexo deploy   <span class="comment"># hexo will push the static files automatically into the specific branch(gh-pages) of your repo!</span></span><br></pre></td></tr></table></figure>
 <h2 id="有一个好的体验">有一个好的体验 ^_^</h2>
 <p>如果你喜欢该主题，请 <a target="_blank" rel="noopener" href="https://github.com/V-Vincen/hexo-theme-livemylife">Star</a>！不胜感激你的 <a target="_blank" rel="noopener" href="https://github.com/V-Vincen">Follow</a>！比心！</p>
 

@@ -245,9 +245,9 @@
           
           
           <li>
-            <a href="/about/">
+            <a href="/archive/">
               
-              关于
+              归档
               
               
             </a>
@@ -256,9 +256,9 @@
           
           
           <li>
-            <a href="/tags/">
+            <a href="/about/">
               
-              标签
+              关于
               
               
             </a>
@@ -280,9 +280,9 @@
           
           
           <li>
-            <a href="/archive/">
+            <a href="/tags/">
               
-              归档
+              标签
               
               
             </a>
@@ -472,25 +472,7 @@
 <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">from sage.all import GF, Matrix</span><br><span class="line">import os, random</span><br><span class="line"></span><br><span class="line"><span class="keyword">assert</span>(<span class="string">&quot;FLAG&quot;</span> <span class="keyword">in</span> os.environ)</span><br><span class="line">FLAG = os.environ<span class="literal">[&quot;FLAG&quot;]</span></span><br><span class="line"><span class="keyword">assert</span>(<span class="module-access"><span class="module"><span class="identifier">FLAG</span>.</span></span>startswith(<span class="string">&quot;KSUS&#123;&quot;</span>) <span class="keyword">and</span> <span class="module-access"><span class="module"><span class="identifier">FLAG</span>.</span></span>endswith(<span class="string">&quot;&#125;&quot;</span>))</span><br><span class="line"></span><br><span class="line">q = <span class="number">271</span></span><br><span class="line">qf = <span class="constructor">GF(<span class="params">q</span>)</span></span><br><span class="line">m = <span class="number">70</span></span><br><span class="line">n = <span class="number">30</span></span><br><span class="line"></span><br><span class="line">def key<span class="constructor">_gen()</span>:</span><br><span class="line">    a = <span class="constructor">Matrix(<span class="params">qf</span>, [[<span class="params">qf</span>.<span class="params">random_element</span>()</span> <span class="keyword">for</span> _ <span class="keyword">in</span> range(n)] <span class="keyword">for</span> _ <span class="keyword">in</span> range(m)])</span><br><span class="line">    s = <span class="constructor">Matrix(<span class="params">qf</span>, [[<span class="params">ord</span>(<span class="params">c</span>)</span>] <span class="keyword">for</span> c <span class="keyword">in</span> FLAG])</span><br><span class="line">    e = <span class="constructor">Matrix(<span class="params">qf</span>, [[<span class="params">int</span>(<span class="params">round</span>(<span class="params">random</span>.<span class="params">gauss</span>(0, 2<span class="operator">/</span>3)</span>))] <span class="keyword">for</span> _ <span class="keyword">in</span> range(m)])</span><br><span class="line">    b = a<span class="operator"> * </span>s + e</span><br><span class="line">    return s, (a,b)</span><br><span class="line"></span><br><span class="line">sk, pk = key<span class="constructor">_gen()</span></span><br><span class="line">a, b = pk</span><br><span class="line"></span><br><span class="line">print(f<span class="string">&quot;a=&#123;[list(a[i]) for i in range(m)]&#125;&quot;</span>)</span><br><span class="line">print(f<span class="string">&quot;b=&#123;[list(b[i]) for i in range(m)]&#125;&quot;</span>)</span><br></pre></td></tr></table></figure>
 <p>​  已知$a_{70 \times 30}*s_{30 \times 1}+e=b$，已知a，b求s</p>
 <p>​  由于q是271，而我们的flag是在[32,256]的，所以不能直接对flag进行格规约，只能规约出e后再对方程进行求解得到flag，所以构造下面的格</p>
-<p>$$<br>
-\begin{bmatrix}</p>
-<p>k_0&amp;k_1&amp;\dots&amp;k_{m-1}&amp;-1</p>
-<p>\end{bmatrix}</p>
-<h1>\times<br>
-\begin{bmatrix}<br>
-a_{0,0} &amp; a_{1,0} &amp; \dots &amp; a_{m-1,0} \\<br>
-a_{0,1} &amp; a_{1,1} &amp; \dots &amp; a_{m-1,1} \\<br>
-\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\<br>
-a_{0,n-1} &amp; a_{1,n-1} &amp; \dots &amp; a_{m-1,n-1} \\<br>
-p &amp;  &amp;  &amp;  \\<br>
-&amp; p &amp;  &amp;  \\<br>
-&amp;  &amp; \ddots &amp;  \\<br>
-&amp;  &amp;  &amp; p<br>
-\end{bmatrix}</h1>
-<p>\begin{bmatrix}</p>
-<p>e_0&amp;e_1&amp;\dots&amp;e_{m-1}</p>
-<p>\end{bmatrix}<br>
-$$</p>
+<p>$\begin{bmatrix}k_0&amp;k_1&amp;\dots&amp;k_{m-1}&amp;-1\end{bmatrix}\times\begin{bmatrix}a_{0,0} &amp; a_{1,0} &amp; \dots &amp; a_{m-1,0} \\a_{0,1} &amp; a_{1,1} &amp; \dots &amp; a_{m-1,1} \\\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\a_{0,n-1} &amp; a_{1,n-1} &amp; \dots &amp; a_{m-1,n-1} \\p &amp;  &amp;  &amp;  \\&amp; p &amp;  &amp;  \\&amp;  &amp; \ddots &amp;  \\&amp;  &amp;  &amp; p\end{bmatrix}=\begin{bmatrix}e_0&amp;e_1&amp;\dots&amp;e_{m-1}\end{bmatrix}$</p>
 <p>代码如下：</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pk import *</span><br><span class="line"><span class="keyword">from</span> sage.all import *</span><br><span class="line">q = 271</span><br><span class="line">qf = GF(q)</span><br><span class="line">m = 70</span><br><span class="line">n = 30</span><br><span class="line"><span class="attribute">L</span>=zero_matrix(ZZ,m+n+1,m)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(m):</span><br><span class="line">    L[n+i,i]=q</span><br><span class="line"><span class="attribute">A</span>=matrix(ZZ,a)</span><br><span class="line"><span class="attribute">B</span>=matrix(ZZ,b)</span><br><span class="line">L[:n,:]=A.T</span><br><span class="line">L[-1,:]=B.T</span><br><span class="line">t=[-2,-1,0,1,2]</span><br><span class="line"><span class="attribute">res</span>=L.LLL()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> res:</span><br><span class="line">    <span class="keyword">if</span> all(j <span class="keyword">in</span> t <span class="keyword">for</span> j <span class="keyword">in</span> i) <span class="keyword">and</span> <span class="keyword">not</span> all(<span class="attribute">j</span>==0 <span class="keyword">in</span> t <span class="keyword">for</span> j <span class="keyword">in</span> i):</span><br><span class="line">        <span class="attribute">e</span>=i</span><br><span class="line">        <span class="attribute">E</span>=matrix(ZZ,e)</span><br><span class="line">        </span><br><span class="line">        flag=(A.T.change_ring(qf)).solve_left((B.T-E).change_ring(qf))</span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> flag[0]:</span><br><span class="line">            <span class="builtin-name">print</span>(chr(k),<span class="attribute">end</span>=<span class="string">&quot;&quot;</span>)</span><br><span class="line"><span class="comment">#KSUS&#123;I_gu3ss_p4r4ms_m4773r_:/&#125;</span></span><br></pre></td></tr></table></figure>
 <h2 id="key-in-the-haystack">key in the haystack</h2>
@@ -704,27 +686,7 @@ $$</p>
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Matrices-Matrices-Matrices"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Matrices Matrices Matrices</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number"></span> <span class="toc-nav-text">\times
-
-\begin{bmatrix}
-
-a_{0,0} &amp; a_{1,0} &amp; \dots &amp; a_{m-1,0} \\
-
-a_{0,1} &amp; a_{1,1} &amp; \dots &amp; a_{m-1,1} \\
-
-\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-
-a_{0,n-1} &amp; a_{1,n-1} &amp; \dots &amp; a_{m-1,n-1} \\
-
-p &amp;  &amp;  &amp;  \\
-
-&amp; p &amp;  &amp;  \\
-
-&amp;  &amp; \ddots &amp;  \\
-
-&amp;  &amp;  &amp; p
-
-\end{bmatrix}</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#key-in-the-haystack"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">key in the haystack</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Lightning-Fast-Scrambling"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Lightning Fast Scrambling</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#key-in-the-big-haystack"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">key in the big haystack</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Feistel-3"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Feistel &lt;3</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Back-the-Hank"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Back the Hank</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Matrices-Matrices-Matrices"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Matrices Matrices Matrices</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#key-in-the-haystack"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">key in the haystack</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Lightning-Fast-Scrambling"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Lightning Fast Scrambling</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#key-in-the-big-haystack"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">key in the big haystack</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Feistel-3"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Feistel &lt;3</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Back-the-Hank"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">Back the Hank</span></a></li></ol>
         
         </div>
       </aside>
